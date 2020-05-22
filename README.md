@@ -10,12 +10,13 @@ https://developer.android.google.cn/reference/android/os/FileObserver.html
 现在已知截图文件夹名称为“Screenshots”
 
 那么我们就要创建一个监听地址 /storage/emulated/0/DCIM/Screenshots
-
+```java
 String path = Environment.getExternalStorageDirectory() 
 + File.separator + Environment.DIRECTORY_DCIM 
 + File.separator + "Screenshots" + File.separator;
+```
 截图文件夹的地址知道后，创建一个FileObserver
-
+```java
 /** * @author yh */
 public class ScreenshotsListener extends FileObserver {    
   private String filePath;    
@@ -42,14 +43,17 @@ public void onEvent(int event, @Nullable String path) {
           break;        
 }    
 }}
+```
 在需要使用的地方调用：
-
+```java
 ScreenshotsListener screenshotsListener = new ScreenshotsListener(new File(path))；
 screenshotsListener.startWatching();
 记得在onDestroy()里面
-
+```
 //关闭监听
+```java
 screenshotsListener.stopWatching();
+```
 注：targetSdkVersion 29 在Android10的小米和pixel上测试是可以实现的，
 
 具体就是path地址，pixel手机里的path要把DCIM修改成为picture，不同机型不同适配。
